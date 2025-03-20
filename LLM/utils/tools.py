@@ -1,21 +1,31 @@
+from google.genai import types
+from google import genai
 
 
-
-
-
-
-
-def set_light_values(brightness: int, color_temp: str) -> dict[str, int | str]:
-    """Set the brightness and color temperature of a room light. (mock API).
-    Args:
-        brightness: Light level from 0 to 100. Zero is off and 100 is full brightness
-        color_temp: Color temperature of the light fixture, which can be `daylight`, `cool` or `warm`.
-
-    Returns:
-        A dictionary containing the set brightness and color temperature.
-    """
-
-
-
-
-
+tools = [
+    types.Tool(
+        function_declarations=[
+            types.FunctionDeclaration(
+                name="changeLights",
+                description="Change light brightness, colour of specific rooms based on user input ",
+                parameters=genai.types.Schema(
+                    type=genai.types.Type.OBJECT,
+                    required=["bulb"],
+                    properties={
+                        "brightness": genai.types.Schema(
+                            type=genai.types.Type.NUMBER,
+                        ),
+                        "colour": genai.types.Schema(
+                            type=genai.types.Type.STRING,
+                        ),
+                        "bulb": genai.types.Schema(
+                            type=genai.types.Type.STRING,
+                        ),
+                        "division": genai.types.Schema(
+                            type=genai.types.Type.STRING,
+                        ),
+                    },
+                ),
+            ),
+        ])
+]
